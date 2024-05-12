@@ -1,5 +1,6 @@
 package com.angelfg.reportms.streams;
 
+import com.angelfg.reportms.models.Company;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,18 @@ public class ReportPublisher {
         this.streamBridge.send("consumerReport", report);
         this.streamBridge.send("consumerReport-in-0", report);
         this.streamBridge.send("consumerReport-out-0", report);
+    }
+
+    /*
+     * Guardar el topico de respaldo
+     * topic name -> consumerCircuitBreakerReport
+     * */
+    public Company publishCircuitBreakerReport(String company) {
+        this.streamBridge.send("consumerCircuitBreakerReport", company);
+        this.streamBridge.send("consumerCircuitBreakerReport-in-0", company);
+        this.streamBridge.send("consumerCircuitBreakerReport-out-0", company);
+
+        return Company.builder().build();
     }
 
 }
